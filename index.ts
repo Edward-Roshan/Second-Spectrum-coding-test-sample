@@ -37,43 +37,39 @@ readFromCsv().then((json: csvFormat[]) => {
         if (filterd[c.Name]) {
             const item = filterd[c.Name];
             const value = parseInt(c.Value);
-            if (value !== NaN) {
-                const currentDate = new Date(c.Date);
-                const storedFirstDate = item.first.date;
-                const storedLastDate = new Date(item.last.date);
-                if (currentDate < storedFirstDate) {
-                    item.first = {
-                        date: currentDate,
-                        value
-                    }
-                }
 
-                if (currentDate > storedLastDate) {
-                    item.last = {
-                        date: currentDate,
-                        value
-                    }
+            const currentDate = new Date(c.Date);
+            const storedFirstDate = item.first.date;
+            const storedLastDate = new Date(item.last.date);
+            if (currentDate < storedFirstDate) {
+                item.first = {
+                    date: currentDate,
+                    value
+                }
+            }
+
+            if (currentDate > storedLastDate) {
+                item.last = {
+                    date: currentDate,
+                    value
                 }
             }
         }
         else {
-            const value = parseInt(c.Value);
-            if (value !== NaN) {
-                filterd[c.Name] = {
-                    first: {
-                        date: new Date(c.Date),
-                        value: parseInt(c.Value),
-                    },
-                    last: {
-                        date: new Date(c.Date),
-                        value: parseInt(c.Value)
-                    }
+            filterd[c.Name] = {
+                first: {
+                    date: new Date(c.Date),
+                    value: parseInt(c.Value),
+                },
+                last: {
+                    date: new Date(c.Date),
+                    value: parseInt(c.Value)
                 }
             }
         }
     });
 
-    let result!: resultFormat; 
+    let result!: resultFormat;
 
     Object.keys(filterd).forEach(c => {
         const item = filterd[c];
